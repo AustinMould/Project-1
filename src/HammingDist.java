@@ -11,6 +11,10 @@ public class HammingDist {
 	public HammingDist(String firstStation, String secondStation) {
 		this.firstStation = firstStation;
 		this.secondStation = secondStation;
+		calcDistance();
+	}
+	
+	public int calcDistance() {
 		distance = 0;
 		for (int index = 0; index < 4; ++index) {
 			char first = this.firstStation.charAt(index);
@@ -19,8 +23,8 @@ public class HammingDist {
 				++distance;
 			}
 		}
+		return distance;
 	}
-	
 	
 	/* Output for toString should be modeled like so:
 	 * 
