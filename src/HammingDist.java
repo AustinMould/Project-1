@@ -11,7 +11,7 @@ public class HammingDist {
 	
 	private String secondStation;
 	
-	private String[] allStations = new String[119];
+	private String[] allStations = new String[120];
 	
 	//HammingDist Constructor which takes in two string inputs for city/station ID
 	public HammingDist(String firstStation, String secondStation) {
@@ -44,7 +44,7 @@ public class HammingDist {
 	}
 	
 	
-	//Reads file to String[] allStations
+	//Reads the filename into allStations
 	public void read(String filename) throws IOException
     {
     	// Use a buffered Reader on the file:
