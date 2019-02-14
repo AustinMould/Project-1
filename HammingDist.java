@@ -33,7 +33,7 @@ public class HammingDist {
 	public HammingDist(String firstStation, String secondStation) {
 		this.firstStation = firstStation;
 		this.secondStation = secondStation;
-		calcDistance();
+		calcDistance(firstStation, secondStation);
 		
 		try
     	{
@@ -49,11 +49,23 @@ public class HammingDist {
 	}
 	
 	//Method for calculating Hamming distance between two IDs
-	public int calcDistance() {
+	public int calcDistance(String firstStation, String secondStation) {
 		distance = 0;
 		for (int index = 0; index < 4; ++index) {
-			char first = this.firstStation.charAt(index);
-			char second = this.secondStation.charAt(index);
+			char first = firstStation.charAt(index);
+			char second = secondStation.charAt(index);
+			if(first != second) {
+				++distance;
+			}
+		}
+		return distance;
+	}
+	
+	public int calcHammingDistance(String station1, String station2) {
+		int distance = 0;
+		for (int index = 0; index < 4; ++index) {
+			char first = station1.charAt(index);
+			char second = station2.charAt(index);
 			if(first != second) {
 				++distance;
 			}
@@ -86,50 +98,36 @@ public class HammingDist {
     }
 	
 	public void calcAllDistance(String station1, String station2) {
-
-		int[] allHammingDistanceCounts = new int[8];
 		for(int index = 0; index < allStations.length; ++index) {
-			if (!station1.equals(allStations[index])) {
-				if(station1.charAt(0) == allStations[index].charAt(0)) {
-					++allHammingDistanceCounts[0];
+			int test1 = calcHammingDistance(station1, allStations[index]);
+				if(test1 == 1) {
+					++firstStationNode1;
 				}
-				if(station1.charAt(1) == allStations[index].charAt(1)) {
-					++allHammingDistanceCounts[1];
+				if(test1 == 2) {
+					++firstStationNode2;
 				}
-				if(station1.charAt(2) == allStations[index].charAt(2)) {
-					++allHammingDistanceCounts[2];
+				if(test1 == 3) {
+					++firstStationNode3;
 				}
-				if(station1.charAt(3) == allStations[index].charAt(3)) {
-					++allHammingDistanceCounts[3];
+				if(test1 == 4) {
+					++firstStationNode4;
 				}
-			}
 		}
 		for(int index = 0; index < allStations.length; ++index) {
-			if (!station2.equals(allStations[index])) {
-				if(station2.charAt(0) == allStations[index].charAt(0)) {
-					++allHammingDistanceCounts[4];
+			int test2 = calcHammingDistance(station2, allStations[index]);
+				if(test2 == 1) {
+					++secondStationNode1;				
+					}
+				if(test2 == 2) {
+					++secondStationNode2;				
+					}
+				if(test2 == 3) {
+					++secondStationNode3;				
+					}
+				if(test2 == 4) {
+					++secondStationNode4;
 				}
-				if(station2.charAt(1) == allStations[index].charAt(1)) {
-					++allHammingDistanceCounts[5];
-				}
-				if(station2.charAt(2) == allStations[index].charAt(2)) {
-					++allHammingDistanceCounts[6];
-				}
-				if(station2.charAt(3) == allStations[index].charAt(3)) {
-					++allHammingDistanceCounts[7];
-				}
-			}
 		}
-		firstStationNode1 = allHammingDistanceCounts[0];
-		firstStationNode2 = allHammingDistanceCounts[1];
-		firstStationNode3 = allHammingDistanceCounts[2];
-		firstStationNode4 = allHammingDistanceCounts[3];
-		
-		secondStationNode1 = allHammingDistanceCounts[4];
-		secondStationNode2 = allHammingDistanceCounts[5];
-		secondStationNode3 = allHammingDistanceCounts[6];
-		secondStationNode4 = allHammingDistanceCounts[7];
-
 	}
 	
 	/* Output for toString should be modeled like so:
@@ -140,7 +138,7 @@ public class HammingDist {
 	 */
 	public String toString() {
 		return String.format("The Hamming Distance of %s and %s: %d.\nOut of 119, for %s, number of nodes are: %d, %d, %d, %d and\nfor %s, number of nodes are: %d, %d, %d, %d respectively.", 
-				firstStation, secondStation, distance, firstStation, firstStationNode1, firstStationNode2, firstStationNode3, firstStationNode4, 
-				secondStation, secondStationNode1, secondStationNode2, secondStationNode3, secondStationNode4);
+				firstStation, secondStation, distance, firstStation, firstStationNode1, firstStationNode2, firstStationNode3, 
+				firstStationNode4, secondStation, secondStationNode1, secondStationNode2, secondStationNode3, secondStationNode4);
 	}
 }
