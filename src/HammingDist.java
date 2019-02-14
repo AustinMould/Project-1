@@ -13,11 +13,27 @@ public class HammingDist {
 	
 	private String[] allStations = new String[120];
 	
+	private int firstStationNode1;
+
+	private int firstStationNode2;
+	
+	private int firstStationNode3;
+	
+	private int firstStationNode4;
+	
+	private int secondStationNode1;
+	
+	private int secondStationNode2;
+	
+	private int secondStationNode3;
+	
+	private int secondStationNode4;
+
 	//HammingDist Constructor which takes in two string inputs for city/station ID
 	public HammingDist(String firstStation, String secondStation) {
 		this.firstStation = firstStation;
 		this.secondStation = secondStation;
-		calcDistance();
+		calcDistance(firstStation, secondStation);
 		
 		try
     	{
@@ -28,14 +44,28 @@ public class HammingDist {
     		System.out.println("Error reading from file!\n");
     		e.printStackTrace();
     	}
+		
+		calcAllDistance(firstStation, secondStation);
 	}
 	
 	//Method for calculating Hamming distance between two IDs
-	public int calcDistance() {
+	public int calcDistance(String firstStation, String secondStation) {
 		distance = 0;
 		for (int index = 0; index < 4; ++index) {
-			char first = this.firstStation.charAt(index);
-			char second = this.secondStation.charAt(index);
+			char first = firstStation.charAt(index);
+			char second = secondStation.charAt(index);
+			if(first != second) {
+				++distance;
+			}
+		}
+		return distance;
+	}
+	
+	public int calcHammingDistance(String station1, String station2) {
+		int distance = 0;
+		for (int index = 0; index < 4; ++index) {
+			char first = station1.charAt(index);
+			char second = station2.charAt(index);
 			if(first != second) {
 				++distance;
 			}
@@ -60,20 +90,44 @@ public class HammingDist {
         	if(strg == null) {
         		break;
         	}
-
-        	allStations[index] = strg;
+        	//Breaks the string into just the 4-digit IDs
+        	allStations[index] = strg.substring(1, 5);
         }
         
         br.close();
     }
 	
-	public int[] calcAllDistance(String station) {
-		
-		int[] allHammingDistanceCounts = new int[4];
-		
-		
-		
-		return null;
+	public void calcAllDistance(String station1, String station2) {
+		for(int index = 0; index < allStations.length; ++index) {
+			int test1 = calcHammingDistance(station1, allStations[index]);
+				if(test1 == 1) {
+					++firstStationNode1;
+				}
+				if(test1 == 2) {
+					++firstStationNode2;
+				}
+				if(test1 == 3) {
+					++firstStationNode3;
+				}
+				if(test1 == 4) {
+					++firstStationNode4;
+				}
+		}
+		for(int index = 0; index < allStations.length; ++index) {
+			int test2 = calcHammingDistance(station2, allStations[index]);
+				if(test2 == 1) {
+					++secondStationNode1;				
+					}
+				if(test2 == 2) {
+					++secondStationNode2;				
+					}
+				if(test2 == 3) {
+					++secondStationNode3;				
+					}
+				if(test2 == 4) {
+					++secondStationNode4;
+				}
+		}
 	}
 	
 	/* Output for toString should be modeled like so:
@@ -84,6 +138,7 @@ public class HammingDist {
 	 */
 	public String toString() {
 		return String.format("The Hamming Distance of %s and %s: %d.\nOut of 119, for %s, number of nodes are: %d, %d, %d, %d and\nfor %s, number of nodes are: %d, %d, %d, %d respectively.", 
-				firstStation, secondStation, distance, firstStation, 0, 0, 0, 0, secondStation, 0, 0, 0, 0);
+				firstStation, secondStation, distance, firstStation, firstStationNode1, firstStationNode2, firstStationNode3, firstStationNode4, 
+				secondStation, secondStationNode1, secondStationNode2, secondStationNode3, secondStationNode4);
 	}
 }
